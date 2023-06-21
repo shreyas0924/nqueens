@@ -19,24 +19,23 @@ int currentstate = 0;
 int sx = 5, sy = 5, loopcount = 1;
 void display();
 
-void nqueen();
-void wait(int n)
+void wait(int n) //delay function 
 {
      int i, j;
-     // n=0;
      for (i = n; i > 0; i--)
-          for (j = 0; j < 40000; j++) // to change the speed
-          {
-          }
+          for (j = 0; j < 40000; j++) {}
 }
 // A Function To Check If The Queen Can Be Placed At A Given Condition
-
 int canplace(int r)
 {
      int i;
      for (i = 0; i < r; i++)
      {
-          if ((x[i] == x[r]) || (fabs(y[i] - y[r]) == fabs(x[i] - x[r])))
+          if ((x[i] == x[r]) || (fabs(y[i] - y[r]) == fabs(x[i] - x[r]))) // fabs is nothing but floating point absoulute number
+          // calculates the absolute difference in row numbers (y) and column numbers (x) 
+          // between the ith queen and the queen being considered. 
+          // If the absolute differences in row and column numbers are equal, 
+          // it means that the queens are on the same diagonal, resulting in a conflict.
           {
                return 0;
           }
@@ -47,14 +46,14 @@ int canplace(int r)
 // A Function For The Start Page Movements
 void move_start()
 {
-     glPushMatrix(); // For Red Sphere
+     glPushMatrix(); // Red
      glTranslatef(sx, sy, 0.0);
      glColor3f(1.0, 0.0, 0.0);
      glutSolidSphere(1.5, 300, 10);
      glutSolidCube(2.0);
      glPopMatrix();
 
-     glPushMatrix(); // For Green Sphere
+     glPushMatrix(); // Green 
      glTranslatef((n * 10) - sx, (n * 10) - sy, 0.0);
      glColor3f(0.0, 1.0, 1.0);
      glutSolidSphere(1.5, 300, 10);
@@ -81,8 +80,6 @@ void move_start()
      }
 }
 
-// The Idle Function Definition
-
 void myidle()
 {
      if (currentstate == 0)
@@ -90,7 +87,6 @@ void myidle()
      wait(300);
 }
 
-// A Mouse Function That Defines The Procedure To Be Followed When Mouse Interrupt Occurs
 void mymouse(int button, int state, int x, int y)
 {
      if ((button == GLUT_LEFT_BUTTON || button == GLUT_RIGHT_BUTTON) && state == GLUT_DOWN)
@@ -109,8 +105,8 @@ void keyboard(unsigned char key, int x, int y)
           glutDisplayFunc(display);
      }
 }
-// A Function To Draw The Checker Board
 
+// Checker Board
 void draw_checker()
 {
      int i, j;
@@ -206,7 +202,7 @@ void display()
      }
      if (flag == 1 && r <= 0)
      {
-          char line3[] = "           Unsuccessfull";
+          char line3[] = "Unsuccessfull";
           glColor3f(0.0, 0.0, 0.7);
           glRasterPos2i(10, 15);
           for (i = 0; i < strlen(line3); i++)
@@ -218,7 +214,7 @@ void display()
      }
      else if (r == n)
      {
-          char line3[] = "            Successfull";
+          char line3[] = "Successfull";
           glColor3f(0.0, 0.0, 0.7);
           glRasterPos2i(10, 15);
           for (i = 0; i < strlen(line3); i++)
@@ -230,22 +226,16 @@ void display()
      }
      else if (currentstate == 0)
      {
-          // glClearColor(0.75,0.75,0.75,1.0);
+
           glClearColor(1, 1, 1, 1);
-          //	char line1[]="PRESENTING...";
-          char line2[] = " N-Queens Backtracking";
+
+          char line2[] = "N-Queens Backtracking";
           char line3[] = "The Solution for N-queens with";
           glColor3f(0.0, 0.0, 0.7);
-          /*glRasterPos2i((n*10)/4-2,(n*5)+10);
-          for(i=0;i<strlen(line1);i++)
-          {
-               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,line1[i]);
-          }*/
+
           glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 5);
           for (i = 0; i < strlen(line2); i++)
           {
-
-               // glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,line2[i]);
 
                glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line2[i]);
           }
@@ -372,7 +362,6 @@ void display()
                glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line5[i]);
           }
           glutKeyboardFunc(keyboard);
-          //	move_start();
           glutSwapBuffers();
           glFlush();
      }
@@ -459,10 +448,10 @@ void display()
                else
                {
                     a[r] = 0;
-                    b[r] = 0; // Queen Cant Be Placed In Any Of The Locations In the Row
+                    b[r] = 0;
                     x[r] = 0;
                     t[r] = 0;
-                    r--; // Move To The Previous Row
+                    r--;
                     a[r] = 1;
                     b[r] = 0;
                }
@@ -499,7 +488,7 @@ void myinit()
 int main(int argc, char **argv)
 {
      glutInit(&argc, argv);
-     printf("\n\n\t\tEnter The Value For Number Of Queens: ");
+     printf("\n\n Enter The Value For Number Of Queens:  ");
      scanf("%d", &n);
      glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
      glutInitWindowSize(700, 700);
