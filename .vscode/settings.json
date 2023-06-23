@@ -2,5 +2,6 @@
   "files.associations": {
     "*.jsx": "javascriptreact",
     "cmath": "cpp"
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }
