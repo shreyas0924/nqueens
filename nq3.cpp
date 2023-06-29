@@ -320,7 +320,7 @@ void myinit()
      glOrtho(0, n * 10, 0, n * 10, 0, n * 10);
      glMatrixMode(GL_MODELVIEW);
      GLfloat mat_diffuse[] = {0.0, 1.0, 1.0, 1.0};
-     GLfloat light_position[] = {n * 5, n * 5, 1.0, 1.0};
+     GLfloat light_position[] = {n * 5.0, n * 5.0, 1.0, 1.0};
      GLfloat mat_specular[] = {0.0, 1.0, 1.0, 1.0};
      GLfloat mat_shininess[] = {25.0};
      glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
