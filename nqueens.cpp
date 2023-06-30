@@ -419,7 +419,7 @@ void myinit()
 int main(int argc, char **argv)
 {
      glutInit(&argc, argv);
-     printf("\n\n\t\tEnter The Value For Number Of Queens: ");
+     printf("\nEnter The Value For Number Of Queens: ");
      scanf("%d", &n);
      glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
      glutInitWindowSize(700, 700);
