@@ -3,7 +3,6 @@
 #include <string.h>
 #include <math.h>
 #include <GL/glut.h>
-#include <cstring>
 
 int i, flag = 0;
 int n;
@@ -15,12 +14,14 @@ GLfloat x[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 GLfloat y[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int r = 0;
 int t[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-int counter, width, height;
+int counter;
 int currentstate = 0;
 int sx = 5, sy = 5, loopcount = 1;
 void display();
+int width = 800;
+int height = 600;
 
-void wait(int n) // delay function
+void wait(int n)
 {
      int i, j;
      for (i = n; i > 0; i--)
@@ -44,14 +45,14 @@ int canplace(int r)
 
 void move_start()
 {
-     glPushMatrix(); // Red
+     glPushMatrix(); // For Red Sphere
      glTranslatef(sx, sy, 0.0);
      glColor3f(1.0, 0.0, 0.0);
      glutSolidSphere(1.5, 300, 10);
      glutSolidCube(2.0);
      glPopMatrix();
 
-     glPushMatrix(); // Green
+     glPushMatrix(); // For Green Sphere
      glTranslatef((n * 10) - sx, (n * 10) - sy, 0.0);
      glColor3f(0.0, 1.0, 1.0);
      glutSolidSphere(1.5, 300, 10);
@@ -82,8 +83,8 @@ void myidle()
 {
      if (currentstate == 0)
           glutPostRedisplay();
+     wait(300);
 }
-
 void mymouse(int button, int state, int x, int y)
 {
      if ((button == GLUT_LEFT_BUTTON || button == GLUT_RIGHT_BUTTON) && state == GLUT_DOWN)
@@ -101,63 +102,6 @@ void keyboard(unsigned char key, int x, int y)
      default:
           glutDisplayFunc(display);
      }
-}
-
-void bitmap_output(int x, int y, char *string, void *font)
-{
-     int len, i;
-     glRasterPos2f(x, y);
-     len = (int)strlen(string);
-     for (i = 0; i < len; i++)
-     {
-          glutBitmapCharacter(font, string[i]);
-     }
-}
-
-// this delays out execution of next instruction
-void delay()
-{
-     long long int i = 9990000000;
-     while (i--)
-          ;
-}
-
-void frontpage()
-{
-     glLineWidth(2);
-     glColor3f(0.9, 0.8, 0.9);
-     bitmap_output(width / 3 + 50, height - height / 10, "WELCOME! TO", GLUT_BITMAP_TIMES_ROMAN_24);
-     glColor3f(0.9, 0.8, 0.0);
-     glBegin(GL_LINE_LOOP);
-     glVertex2f(width / 3 + 30, height - height / 9);
-     glVertex2f(width / 3 + 240, height - height / 9);
-     glEnd();
-     glColor3f(0.9, 0.8, 0.9);
-     bitmap_output(width / 3 + 10, height - height / 6, "N-Queens Algorithm Simulation", GLUT_BITMAP_TIMES_ROMAN_24);
-     glColor3f(0.9, 0.8, 0.0);
-     glBegin(GL_LINE_LOOP);
-     glVertex2f(width / 3 - 10, height - height / 5.5);
-     glVertex2f(width / 3 + 290, height - height / 5.5);
-     glEnd();
-     glColor3f(0.9, 0.8, 0.9);
-     bitmap_output(width / 3 + 150 - (glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char *)"JSS Academy Of Technical Education, Bengaluru") / 2), height - height / 3, "JSS Academy Of Technical Education, Bengaluru", GLUT_BITMAP_TIMES_ROMAN_24);
-     glColor3f(0.9, 0.8, 0.9);
-     bitmap_output(width / 3 + 150 - (glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char *)"Presented By") / 2), height - height / 2, "Presented By", GLUT_BITMAP_TIMES_ROMAN_24);
-     glColor3f(0.9, 0.8, 0.9);
-     bitmap_output(width / 3 + 150 - (glutBitmapLength(GLUT_BITMAP_HELVETICA_18, (const unsigned char *)"Shravanth Reddy M R       1JS20CS154") / 2), height - height / 1.7, "Shravanth Reddy M R      1JS20CS154", GLUT_BITMAP_HELVETICA_18);
-     glColor3f(0.9, 0.8, 0.9);
-     bitmap_output(width / 3 + 150 - (glutBitmapLength(GLUT_BITMAP_HELVETICA_18, (const unsigned char *)"Shreyas P                    1JS20CS157") / 2), height - height / 1.5, "Shreyas P                   1JS20CS157", GLUT_BITMAP_HELVETICA_18);
-     glColor3f(0.9, 0.8, 0.9);
-     bitmap_output(width / 3 + 150 - (glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char *)"Under The Guidance Of") / 2), 130, "Under The Guidance Of", GLUT_BITMAP_TIMES_ROMAN_24);
-     glColor3f(0.9, 0.8, 0.9);
-     bitmap_output(width / 3 + 150 - (glutBitmapLength(GLUT_BITMAP_HELVETICA_18, (const unsigned char *)"Dr. Sharana Basavana Gowda") / 2), 90, "Dr. Sharana Basavana Gowda", GLUT_BITMAP_HELVETICA_18);
-     glutSwapBuffers();
-     delay();
-     glColor3f(1, 0.1, 0.2);
-     bitmap_output(width / 2 + 150, 50, "Press Enter to Continue.......", GLUT_BITMAP_HELVETICA_18);
-     glutSwapBuffers();
-     delay();
-     glutPostRedisplay();
 }
 
 void draw_checker()
@@ -197,10 +141,8 @@ void draw_checker()
           }
      }
 }
-
 void move_queen()
 {
-
      for (i = 0; i < n; i++)
      {
           if (a[i] == 1 && b[i] == 0)
@@ -237,9 +179,9 @@ void mydisplay()
 }
 void display()
 {
-
      long int i;
      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+     glColor3f(100 / 255, 116 / 255, 139 / 255);
      glMatrixMode(GL_MODELVIEW);
      glLoadIdentity();
      gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -10.0, 0.0, 1.0, -1.0);
@@ -249,9 +191,21 @@ void display()
      }
      if (flag == 1 && r <= 0)
      {
-          char line3[] = "Unsuccessful";
+          char line8[] = "\t\t\tUnsuccessfull";
           glColor3f(0.0, 0.0, 0.7);
-          glRasterPos2i(10, 15);
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 4);
+          for (i = 0; i < strlen(line8); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line8[i]);
+          }
+          glutSwapBuffers();
+          glFlush();
+     }
+     else if (r == n)
+     {
+          char line3[] = "\t\t\tSuccessfull";
+          glColor3f(0.0, 0.0, 0.7);
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 4);
           for (i = 0; i < strlen(line3); i++)
           {
                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line3[i]);
@@ -259,23 +213,97 @@ void display()
           glutSwapBuffers();
           glFlush();
      }
-     else if (r == n)
+     else if (currentstate == 0)
      {
-          char line3[] = "Successful";
-          glColor3f(0.0, 0.0, 0.7);
-          glRasterPos2i(10, 15);
-          for (i = 0; i < strlen(line3); i++)
-               glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line3[i]);
+          glClearColor(1, 1, 1, 1.0);
+
+          glColor3f(100 / 255.0f, 80 / 255.0f, 139 / 255.0f);
+          char line1[] = "\t\tWelcome to N-Queens Algorithm Simulation";
+          char line2[] = "\t\tJSS Academy Of Technical Education, Bengaluru";
+          char line21[] = "\t\tPresented By,";
+          char line22[] = "\t\tShravanth Reddy M R\t\t 1JS20CS154";
+          char line23[] = "\t\tShreyas P \t\t 1JS20CS157";
+          char line31[] = "\t\tUnder the Guidance of, ";
+          char line32[] = "\t\tDr. Sharana Basavana Gowda";
+          char line33[] = "\t\tMs Rashmi B N";
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 16);
+          for (int i = 0; i < strlen(line1); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line1[i]);
+          }
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 12);
+          for (int i = 0; i < strlen(line2); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line2[i]);
+          }
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 8);
+          for (int i = 0; i < strlen(line21); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line21[i]);
+          }
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 6);
+          for (int i = 0; i < strlen(line22); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line22[i]);
+          }
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 4);
+          for (int i = 0; i < strlen(line23); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line23[i]);
+          }
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 0);
+          for (int i = 0; i < strlen(line31); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line31[i]);
+          }
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 4);
+          for (int i = 0; i < strlen(line32); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line32[i]);
+          }
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 6);
+          for (int i = 0; i < strlen(line33); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line33[i]);
+          }
+
+          if (n >= 1 && n <= 10)
+          {
+               char line4[20];
+               sprintf(line4, "\t\tGiven value of N = %d", n);
+               glColor3f(0.0, 0.0, 0.7);
+               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 12);
+               for (int i = 0; i < strlen(line4); i++)
+               {
+                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
+               }
+          }
+          char line5[] = "\t\tClick To Proceed..";
+          glColor3f(100 / 255.0f, 116 / 255.0f, 139 / 255.0f);
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 14);
+          for (int i = 0; i < strlen(line5); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line5[i]);
+          }
+          glutKeyboardFunc(keyboard);
           glutSwapBuffers();
           glFlush();
      }
+
      else
      {
           while (r >= 0 && r < n)
           {
                a[r] = 1;
                y[r] = (n * 10 - 5) - 10 * r;
-               if (t[r] == 0) // To Place The Queen In The First Position
+               if (t[r] == 0)
                {
                     for (counter = 0; counter < 5; counter++)
                     {
@@ -305,7 +333,7 @@ void display()
                     wait(3000);
                }
 
-               while (x[r] < n * 10 && !canplace(r)) // Check If Can Be Placed, Else Move To Next Position
+               while (x[r] < n * 10 && !canplace(r))
                {
                     for (counter = 0; counter < 10; counter++)
                     {
@@ -375,7 +403,7 @@ void myinit()
      glOrtho(0, n * 10, 0, n * 10, 0, n * 10);
      glMatrixMode(GL_MODELVIEW);
      GLfloat mat_diffuse[] = {0.0, 1.0, 1.0, 1.0};
-     GLfloat light_position[] = {n * 5.0, n * 5.0, 1.0, 1.0};
+     GLfloat light_position[] = {n * 5, n * 5, 1.0, 1.0};
      GLfloat mat_specular[] = {0.0, 1.0, 1.0, 1.0};
      GLfloat mat_shininess[] = {25.0};
      glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
@@ -391,17 +419,16 @@ void myinit()
 int main(int argc, char **argv)
 {
      glutInit(&argc, argv);
-
-     printf("\n\n Enter The Value For Number Of Queens:  ");
+     printf("\n\n\t\tEnter The Value For Number Of Queens: ");
      scanf("%d", &n);
      glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
      glutInitWindowSize(700, 700);
      glutCreateWindow("N Queens");
-
      myinit();
-     frontpage();
      glutDisplayFunc(display);
      glutIdleFunc(myidle);
+     glutMouseFunc(mymouse);
+     glutKeyboardFunc(keyboard);
      glutMainLoop();
      return 0;
 }
