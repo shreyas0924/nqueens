@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-// #include<windows.h>
 #include <string.h>
 #include <math.h>
 #include <GL/glut.h>
@@ -19,12 +18,14 @@ int counter;
 int currentstate = 0;
 int sx = 5, sy = 5, loopcount = 1;
 void display();
+int width = 800;
+int height = 600;
 
 void nqueen();
 void wait(int n)
 {
      int i, j;
-     // n=0;
+     // \t\tn=0;
      for (i = n; i > 0; i--)
           for (j = 0; j < 40000; j++) // to change the speed
           {
@@ -196,8 +197,10 @@ void mydisplay()
 
 void display()
 {
+
      long int i;
      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+     glColor3f(100 / 255, 116 / 255, 139 / 255);
      glMatrixMode(GL_MODELVIEW);
      glLoadIdentity();
      gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -10.0, 0.0, 1.0, -1.0);
@@ -207,7 +210,7 @@ void display()
      }
      if (flag == 1 && r <= 0)
      {
-          char line3[] = "           Unsuccessfull";
+          char line3[] = "\t\t\tUnsuccessfull";
           glColor3f(0.0, 0.0, 0.7);
           glRasterPos2i(10, 15);
           for (i = 0; i < strlen(line3); i++)
@@ -219,7 +222,7 @@ void display()
      }
      else if (r == n)
      {
-          char line3[] = "            Successfull";
+          char line3[] = "\t\t\tSuccessfull";
           glColor3f(0.0, 0.0, 0.7);
           glRasterPos2i(10, 15);
           for (i = 0; i < strlen(line3); i++)
@@ -232,148 +235,53 @@ void display()
      else if (currentstate == 0)
      {
           // glClearColor(0.75,0.75,0.75,1.0);
-          glClearColor(1, 1, 1, 1);
-          //	char line1[]="PRESENTING...";
-          char line2[] = " N-Queens Backtracking";
-          char line3[] = "The Solution for N-queens with";
-          glColor3f(0.0, 0.0, 0.7);
-          /*glRasterPos2i((n*10)/4-2,(n*5)+10);
-          for(i=0;i<strlen(line1);i++)
-          {
-               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,line1[i]);
-          }*/
-          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 5);
-          for (i = 0; i < strlen(line2); i++)
-          {
+          // glClearColor(1, 1, 1, 1);
+          glColor3f(100 / 255.0f, 80 / 255.0f, 139 / 255.0f);
 
-               // glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,line2[i]);
+          char line1[] = "\t\tPRESENTING...";
+          char line2[] = "JSS Academy Of Technical Education";
+          char line3[] = "\t\tN-Queens Backtracking";
 
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) + 3);
+          for (int i = 0; i < strlen(line1); i++)
+          {
+               glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line1[i]);
+          }
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5));
+          for (int i = 0; i < strlen(line2); i++)
+          {
                glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line2[i]);
           }
-          glRasterPos2i((n * 10) / 4 - 2, (n * 5));
-          for (i = 0; i < strlen(line3); i++)
+
+          glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 3);
+          for (int i = 0; i < strlen(line3); i++)
           {
                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line3[i]);
           }
 
-          if (n == 4)
+          if (n >= 1 && n <= 10)
           {
-               char line4[] = "N=4";
+               char line4[10];
+               sprintf(line4, "\t\tN=%d", n);
+
                glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
+               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 6);
+               for (int i = 0; i < strlen(line4); i++)
                {
                     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
                }
           }
 
-          if (n == 5)
-          {
-               char line4[] = "N=5";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-
-          if (n == 6)
-          {
-               char line4[] = "N=6";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-
-          if (n == 7)
-          {
-               char line4[] = "N=7";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-
-          if (n == 8)
-          {
-
-               char line4[] = "N=8";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-          if (n == 1)
-          {
-               char line4[] = "N=1";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-
-          if (n == 2)
-          {
-               char line4[] = "N=2";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-
-          if (n == 3)
-          {
-               char line4[] = "N=3";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-
-          if (n == 9)
-          {
-               char line4[] = "N=9";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-
-          if (n == 10)
-          {
-               char line4[] = "N=10";
-               glColor3f(0.0, 0.0, 0.7);
-               glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 5);
-               for (i = 0; i < strlen(line4); i++)
-               {
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, line4[i]);
-               }
-          }
-          char line5[] = "Click To Proceed..";
-          glColor3f(0.0, 0.0, 0.7);
+          char line5[] = "\t\tClick To Proceed..";
+          glColor3f(100 / 255.0f, 116 / 255.0f, 139 / 255.0f);
           glRasterPos2i((n * 10) / 4 - 2, (n * 5) - 10);
-          for (i = 0; i < strlen(line5); i++)
+          for (int i = 0; i < strlen(line5); i++)
           {
                glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, line5[i]);
           }
+
           glutKeyboardFunc(keyboard);
-          //	move_start();
           glutSwapBuffers();
           glFlush();
      }
