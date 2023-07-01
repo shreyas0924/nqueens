@@ -416,6 +416,16 @@ void myinit()
      glEnable(GL_COLOR_MATERIAL);
 }
 
+void menu(int id)
+{
+     switch (id)
+     {
+     case 0:
+          exit(1);
+          break;
+     }
+}
+
 int main(int argc, char **argv)
 {
      glutInit(&argc, argv);
@@ -429,6 +439,9 @@ int main(int argc, char **argv)
      glutIdleFunc(myidle);
      glutMouseFunc(mymouse);
      glutKeyboardFunc(keyboard);
+     glutCreateMenu(menu);
+     glutAddMenuEntry("Exit", 0);
+     glutAttachMenu(GLUT_RIGHT_BUTTON);
      glutMainLoop();
      return 0;
 }
